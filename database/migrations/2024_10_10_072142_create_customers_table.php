@@ -11,19 +11,21 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('post_tag', function (Blueprint $table) {
+        Schema::create('customers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('post_id')->constrained()->onDelete('cascade');
-            $table->foreignId('tag_id')->constrained()->onDelete('cascade');
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->string('phone_number');
             $table->timestamps();
         });
     }
+    
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('post_tag');
+        Schema::dropIfExists('customers');
     }
 };

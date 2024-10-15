@@ -1,21 +1,23 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PostController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\TagController;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-*/
-
-// Home Route - Display all posts
-Route::get('/', [PostController::class, 'home'])->name('home');
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\CustomerController;
 
 
-// Resource Routes for Posts, Categories, Tags
-Route::resource('posts', PostController::class);
-Route::resource('categories', CategoryController::class);
-Route::resource('tags', TagController::class);
+
+
+
+Route::get('/', function () {
+    return view('home'); // Points to the home.blade.php view
+})->name('home'); // Assigns the name 'home' to this route
+
+// // web.php
+// Route::post('/customers/store', [CustomerController::class, 'store'])->name('customers.store');
+
+ Route::resource('customers', CustomerController::class);
+Route::resource('orders', OrderController::class);
+Route::resource('services', ServiceController::class);
+
+
+
