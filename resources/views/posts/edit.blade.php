@@ -18,6 +18,8 @@
         @csrf
         @method('PUT')
 
+        <!-- Existing Fields -->
+
         <div class="form-group">
             <label>Title:</label>
             <input type="text" name="title" class="form-control" value="{{ old('title', $post->title) }}" placeholder="Enter Title">
@@ -50,6 +52,23 @@
                 @endforeach
             </select>
             <small class="form-text text-muted">Hold down the Ctrl (windows) / Command (Mac) button to select multiple options.</small>
+        </div>
+
+        <!-- Display Current Image -->
+        <div class="form-group">
+            <label>Current Image:</label><br>
+            @if($post->image_url)
+                <img src="{{ $post->image_url }}" alt="Post Image" width="200">
+            @else
+                <p>No image URL provided.</p>
+            @endif
+        </div>
+
+        <!-- New Image URL Field -->
+        <div class="form-group">
+            <label>Change Image URL:</label>
+            <input type="url" name="image_url" class="form-control" placeholder="Enter Image URL" value="{{ old('image_url', $post->image_url) }}">
+            <small class="form-text text-muted">Optional. Please provide a valid image URL (e.g., https://example.com/image.jpg).</small>
         </div>
 
         <button type="submit" class="btn btn-primary">Update</button>

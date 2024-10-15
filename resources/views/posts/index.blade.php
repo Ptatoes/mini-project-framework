@@ -14,6 +14,7 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
+                    <th>Image</th> <!-- New Column -->
                     <th>Title</th>
                     <th>Category</th>
                     <th>Tags</th>
@@ -23,6 +24,13 @@
             <tbody>
                 @foreach($posts as $post)
                     <tr>
+                        <td>
+                            @if($post->image_url)
+                                <img src="{{ $post->image_url }}" alt="Post Image" width="100" loading="lazy">
+                            @else
+                                <img src="{{ asset('images/default.png') }}" alt="Default Image" width="100" loading="lazy">
+                            @endif
+                        </td>
                         <td><a href="{{ route('posts.show', $post) }}">{{ $post->title }}</a></td>
                         <td>{{ $post->category->name }}</td>
                         <td>

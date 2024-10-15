@@ -9,6 +9,7 @@ class Category extends Model
 {
     use HasFactory;
 
+    // Allow mass assignment
     protected $fillable = ['name'];
 
     /**

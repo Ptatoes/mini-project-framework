@@ -10,6 +10,13 @@ use App\Models\Tag;
 
 class PostController extends Controller
 {
+    public function home()
+    {
+        // Fetch all posts with their associated category and tags, paginated
+        $posts = Post::with(['category', 'tags'])->orderBy('created_at', 'desc')->paginate(10);
+        return view('home', compact('posts'));
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -34,19 +41,32 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        // Validate the incoming request data
         $request->validate([
             'title' => 'required|max:255',
             'content' => 'required',
             'category_id' => 'required|exists:categories,id',
             'tags' => 'array',
             'tags.*' => 'exists:tags,id',
+            'image_url' => [
+            'nullable',
+            'url',
+            'active_url',
+            'regex:/\.(jpeg|jpg|png|gif|svg)(\?.*)?$/i',
+        ], // New validation rule
         ]);
-    
-        $post = Post::create($request->only('title', 'content', 'category_id'));
+
+        // Extract relevant data
+        $data = $request->only('title', 'content', 'category_id', 'image_url');
+
+        // Create the post
+        $post = Post::create($data);
+
+        // Attach tags if provided
         if ($request->has('tags')) {
             $post->tags()->attach($request->tags);
         }
-    
+
         return redirect()->route('posts.index')->with('success', 'Post created successfully.');
     }
 
@@ -75,15 +95,28 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        // Validate the incoming request data
         $request->validate([
             'title' => 'required|max:255',
             'content' => 'required',
             'category_id' => 'required|exists:categories,id',
             'tags' => 'array',
             'tags.*' => 'exists:tags,id',
+            'image_url' => [
+            'nullable',
+            'url',
+            'active_url',
+            'regex:/\.(jpeg|jpg|png|gif|svg)(\?.*)?$/i',
+        ], // New validation rule
         ]);
     
-        $post->update($request->only('title', 'content', 'category_id'));
+        // Extract relevant data
+        $data = $request->only('title', 'content', 'category_id', 'image_url');
+    
+        // Update the post
+        $post->update($data);
+    
+        // Sync tags if provided
         if ($request->has('tags')) {
             $post->tags()->sync($request->tags);
         } else {
@@ -97,8 +130,9 @@ class PostController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(Post $post)
-    {
-        $post->delete();
-        return redirect()->route('posts.index')->with('success', 'Post deleted successfully.');
-    }
+{
+    // No need to delete image files since images are hosted externally
+    $post->delete();
+    return redirect()->route('posts.index')->with('success', 'Post deleted successfully.');
+}
 }

@@ -17,6 +17,8 @@
     <form action="{{ route('posts.store') }}" method="POST">
         @csrf
 
+        <!-- Existing Fields -->
+
         <div class="form-group">
             <label>Title:</label>
             <input type="text" name="title" class="form-control" placeholder="Enter Title" value="{{ old('title') }}">
@@ -49,6 +51,13 @@
                 @endforeach
             </select>
             <small class="form-text text-muted">Hold down the Ctrl (windows) / Command (Mac) button to select multiple options.</small>
+        </div>
+
+        <!-- New Image URL Field -->
+        <div class="form-group">
+            <label>Image URL:</label>
+            <input type="url" name="image_url" class="form-control" placeholder="Enter Image URL" value="{{ old('image_url') }}">
+            <small class="form-text text-muted">Optional. Please provide a valid image URL (e.g., https://example.com/image.jpg).</small>
         </div>
 
         <button type="submit" class="btn btn-primary">Submit</button>
