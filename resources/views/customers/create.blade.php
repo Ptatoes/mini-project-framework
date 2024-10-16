@@ -1,16 +1,3 @@
-{{-- @extends('layouts.app')
-
-@section('content')
-<h1>Add Customer</h1>
-<form action="{{ route('customers.store') }}" method="POST">
-    @csrf
-    Name: <input type="text" name="name" required><br>
-    Email: <input type="email" name="email" required><br>
-    Phone Number: <input type="text" name="phone_number" required><br>
-    <button type="submit">Add</button>
-    <a href="{{ route('customers.index') }}" class="btn btn-secondary">Cancel</a>
-</form>
-@endsection --}}
 @extends('layouts.app')
 
 <head>
@@ -30,9 +17,12 @@
 </header>
 
 @section('content')
+
+
 <!-- Centered title under the navbar -->
 <h1 class="page-title">Create New Customer</h1>
 
+<!-- Form with client-side email validation -->
 <form id="createCustomerForm" action="{{ route('customers.store') }}" method="POST">
     @csrf
 
@@ -40,13 +30,24 @@
     <input type="text" name="name" id="name" required>
 
     <label for="email">Email</label>
-    <input type="email" name="email" id="email" required>
+    <input type="email" name="email" id="email" required> <!-- Email field with HTML5 validation -->
 
     <label for="phone">Phone Number</label>
     <input type="text" name="phone_number" id="phone" required>
 
     <button type="button" id="submitCustomerBtn" class="back-btn">Create Customer</button>
 </form>
+
+<!-- Display errors (Server-side validation) -->
+@if($errors->any())
+<div class="error-messages">
+    <ul>
+        @foreach($errors->all() as $error)
+            <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
 
 <!-- Back Button -->
 <a href="{{ route('customers.index') }}" class="back-btn">Back to Customers List</a>
@@ -88,7 +89,7 @@
         const email = document.getElementById('email').value;
         const phone = document.getElementById('phone').value;
 
-        // Check if all fields are filled
+        // Check if all fields are filled and email is valid
         if (name === "" || email === "" || phone === "") {
             return false;
         }
@@ -121,5 +122,3 @@
 </script>
 
 @endsection
-
-
