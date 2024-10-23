@@ -17,3 +17,5 @@ Each order is linked to a specific service.
 This project aims to provide a user-friendly platform for managing laundry service operations efficiently, allowing users to handle customer orders and services with ease.
 
 This is the YouTube Link for the video of the website:[https://youtu.be/st6xZqOJ8i0 ](https://youtu.be/st6xZqOJ8i0?si=GsYLA5py5IOv7hcx)
+
+PBKK Project Group IUP Ainulaaqelah Huzaifah(5999241101) & Fatin Afifah Nor Azman(5999241102)
